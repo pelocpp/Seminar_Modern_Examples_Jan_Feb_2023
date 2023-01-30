@@ -156,3 +156,61 @@ shortest lambda on earth:
 auto nothing = [] () {};
 
 auto nothing2 = [] () {} ();
+
+======================================
+
+std::vector<int> { 1, 2, 3, 4, 5 };
+
+Klasse Foo:
+
+Foo foo (1, 2, 3);
+
+
+Neues Konzept:
+==============
+
+Runde Klammern:        () =====> Methodenaufruf
+
+Geschweifte Klammern:  {} =====> Initialisierung (inkl. Konstruktoren)
+
+==============================================
+
+std::fill KANN auf std::memset abbilden
+
+==============================================
+
+Was ist die Stilistik der STL ?
+
+        std::fill(
+            numbers.begin(),
+            numbers.end(),
+            2
+        );
+
+        // std::generate berechnet den Vorbelegungswert
+        std::generate(
+            numbers.begin(),
+            numbers.end(),
+            [count = 0] () mutable {
+                count ++ ;
+                return count;
+            }
+        );
+
+
+Quellcode in Blöcken formulieren:  Building Blocks
+
+==============================================
+
+Übungen:
+========
+
+Empty Project (VS Studio)
+
+== Move-Semantik:  Aufgabe 1
+
+== Lambda Funktionen:  Aufgabe 1
+
+== Generischen Lambda Funktionen:  Aufgabe 1
+
+==============================================

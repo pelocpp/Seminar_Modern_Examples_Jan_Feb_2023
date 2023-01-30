@@ -38,6 +38,37 @@ namespace Lambdas {
         std::cout << "Element: " << element << std::endl;
     }
 
+    void test_0000()
+    {
+        std::vector<int> numbers;  // STL-Container
+        numbers.resize(20);
+
+        // Vorbelegen
+        // a) Mit for-Schleife ???
+        for (int i = 0; i < numbers.size(); ++i) {
+            numbers[i] = 1;
+        }
+
+        // b) mit std::fill
+        std::fill(
+            numbers.begin(),
+            numbers.end(),
+            2
+        );
+
+        // std::generate berechnet den Vorbelegungswert
+        std::generate(
+            numbers.begin(),
+            numbers.end(),
+            [count = 0] () mutable {
+                count ++ ;
+                return count;
+            }
+        );
+
+    }
+
+
     void test_000()
     {
         // STL  // vector / längenveränderbares Array
@@ -326,6 +357,7 @@ namespace Lambdas {
 void main_lambdas()
 {
     using namespace Lambdas; 
+    test_0000();
     //test_000();
     //test_00();
     //test_01();
@@ -334,7 +366,7 @@ void main_lambdas()
     //test_04();
     //test_05();
     //test_06();
-    test_07();
+    //test_07();
     //test_08();
     //test_09();
 }

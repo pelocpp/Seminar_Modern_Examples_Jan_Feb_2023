@@ -133,7 +133,7 @@ int main()
         //main_exercises();
         //main_expression_templates();
         //main_generate();
-        main_generic_lambdas();
+        //main_generic_lambdas();
         //main_keyword_explicit();
         //main_filesystem();
         //main_functional_programming();
@@ -141,7 +141,7 @@ int main()
         //main_initializer_list();
         //main_input_output_streams();
         //main_invoke();
-        //main_lambdas();
+        main_lambdas();
         //main_lambda_and_closure();
         //main_lambdas_this_closure();
         //main_lambda_and_visitor();
