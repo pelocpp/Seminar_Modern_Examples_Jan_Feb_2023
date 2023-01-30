@@ -11,22 +11,111 @@
 
 namespace Auto_Examples {
 
-    std::map<int, std::string> getFunction() { return {}; };
+    // Hash Map // Dictionary // Schlüssel, Wert / Key, Value - Paare
+    std::map<long, std::string> getFunction() { return {}; };
 
     void test_01_a() {
+
+        // JavaScript --- aber so geht das nicht in C++   :)
+        //let n;
+        //var m;
+
+        //n = 123;
+        //n = 234.345;
+        //n = "asdasdsa";
+
+        auto k = 123.456;  // Type  Deduction / Typableitung / Typ deduzieren
+
+        // Jeder Konstanten ist per C++ Sprachdefinition ein Typ zugeordnet.
+        123.456,        // double
+            123.456F,   // float
+            '?',        // char
+            "ABC",      // const char*
+            123l,       // long
+            123ll,      // long long
+            (short)123; // short  
+
 
         auto n = 123;    // n is type of int
 
         auto result = getFunction();
-        std::map<int, std::string> result2 = getFunction();
+
+        std::map<long, std::string> result2 = getFunction();
     }
 
     // ---------------------------------------------------------------------
 
     auto sum(float f1, float f2)
     {
-        return f1 + f2;
+        return f1 + (double) f2;  // Typ Ableitung
     }
+
+    auto zweiteFunktion(bool flag, float f1, double f2) -> double //  Trailing Return Type
+    {
+        if (flag) {
+
+            return f2;
+        }
+        else {
+
+            return f1;
+        }
+    }
+
+    // Identisch
+    double zweiteFunktionEx(bool flag, float f1, double f2)
+    {
+        if (flag) {
+
+            return f2;
+        }
+        else {
+
+            return f1;
+        }
+    }
+
+    template <typename T, typename U>
+    
+    auto dritteFunktion(bool flag, T f1, U f2) -> decltype (f1 + f2) //  Trailing Return Type
+    {
+        if (flag) {
+
+            return f2;
+        }
+        else {
+
+            return f1;
+        }
+    }
+
+    template <typename T, typename U>
+
+    decltype ( std::declval<T>() + std::declval<U>() ) 
+        dritteFunktionEx(bool flag, T f1, U f2)
+    {
+        if (flag) {
+
+            return f2;
+        }
+        else {
+
+            return f1;
+        }
+    }
+
+
+    void testme()
+    {
+        auto result2 = (short)123 + (short)456;
+
+        auto result = dritteFunktionEx(false, 123, 456l);
+    }
+
+
+
+
+
 
     auto foo(bool flag, char ch, double d) -> double
     {
@@ -161,7 +250,7 @@ namespace Auto_Examples {
     }
 }
 
-void main_auto()
+void main_auto() 
 {
     using namespace Auto_Examples;
     test_01_a();

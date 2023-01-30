@@ -26,7 +26,8 @@ namespace MoveSemantics {
         BigData& operator= (const BigData&);  // copy assignment
 
         // move semantics
-        //BigData(BigData&&) noexcept;  // move c'tor
+        BigData(BigData&&) noexcept;  // move c'tor
+
         //BigData& operator= (BigData&&) noexcept; // move assignment
 
     private:
@@ -97,13 +98,13 @@ namespace MoveSemantics {
     // -------------------------------------------------------------------
 
     // move semantics
-    //BigData::BigData(BigData&& data) noexcept {  // move c'tor
+    BigData::BigData(BigData&& data) noexcept {  // move c'tor
 
-    //    m_data = data.m_data;   // shallow copy
-    //    m_size = data.m_size;
-    //    data.m_data = nullptr;  // reset source object, ownership has been moved
-    //    data.m_size = 0;
-    //}
+        m_data = data.m_data;   // shallow copy
+        m_size = data.m_size;
+        data.m_data = nullptr;  // reset source object, ownership has been moved
+        data.m_size = 0;
+    }
 
     // first alternate realisation
     //BigData::BigData(BigData&& data) noexcept {  // move c'tor
@@ -217,7 +218,21 @@ namespace MoveSemantics {
     void test_02_demonstrate_move_ctor() {
 
         std::vector<BigData> vec;
-        vec.push_back(BigData(10, 1));
+
+        BigData tmp(10, 1);
+        vec.push_back(tmp);
+
+        // vec.push_back(BigData(10, 1));
+    }
+
+    void test_02_frage() {
+
+        std::vector<BigData> vec;
+
+        vec.emplace_back(10, 1);  // Diese Parameter werden auf einen
+                                  // BigData Konstruktor umgelenkt
+
+        // vec.push_back(BigData(10, 1));
     }
 
     void test_03_demonstrate_move_assignment() {
@@ -238,7 +253,7 @@ namespace MoveSemantics {
     }
 }
 
-void main_move_semantics()
+void main_move_semantics() 
 {
     using namespace MoveSemantics;
     test_01_move_semantics();

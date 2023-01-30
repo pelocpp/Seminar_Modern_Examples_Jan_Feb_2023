@@ -32,8 +32,10 @@ namespace LValueRValue {
 
     void helper(std::string&& message) {
 
-        sayHello(message);
-        // sayHello(std::move(message));    // casting an lvalue to an rvalue
+        sayHello(std::move(message));   // <===== WER ????
+                             // A) RValue: message ist vom Typ && 
+                             // B) LValue: Der Parameter für sayHello hat einen Namen
+                                                                         // sayHello(std::move(message));    // casting an lvalue to an rvalue
     }
 
     void test02() {

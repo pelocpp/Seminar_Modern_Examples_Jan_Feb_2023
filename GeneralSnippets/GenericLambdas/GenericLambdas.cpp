@@ -73,7 +73,9 @@ namespace GenericLambdas {
     void test_04()
     {
         // define a generic lambda
-        auto isGreaterThanFifty = [](const auto& n) { return n > 50; };
+        auto isGreaterThanFifty = [](const auto& n) { 
+            return n > 50; // "integer promotion" 
+        };
 
         std::vector<int> intValues{ 44, 65, 22, 77, 2 };
 
@@ -298,9 +300,9 @@ namespace GenericLambdas {
         // This parameter is forwarded to the 'plus' function.
         // The second parameter equals 10, which is being saved in the function object:
 
-        auto plus = [](auto l, auto r) { return l + r; };
+        auto plus = [] (auto l, auto r) { return l + r; };
 
-        auto plusTen = [plus](int x) { return plus(10, x); };
+        auto plusTen = [plus] (auto x) { return plus(10, x); };
 
         std::cout << plusTen(5) << std::endl;
     }

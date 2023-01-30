@@ -11,9 +11,11 @@
 namespace Lambdas {
 
     bool compare (int n1, int n2) {
-        return n1 < n2;
+        std::cout << "  .. vergleiche " << n1 << " mit " << n2 << std::endl;
+        return n1 > n2;
     }
 
+    // Instanz:  function object //  functor  // Funktor // Aufrufbares Objekt
     class Comparer
     {
     private:
@@ -23,15 +25,52 @@ namespace Lambdas {
         Comparer() : m_flag{ true } {}
         Comparer(bool flag) : m_flag{ flag } {}
 
+        // Aufrufoperator
         bool operator() (int n1, int n2) const {
+            std::cout << "  .. operator(): vergleiche " << n1 << " mit " << n2 << std::endl;
+            
             return (m_flag) ? n1 < n2 : n1 > n2;
         }
     };
 
+
+    void tueWas(int element) {
+        std::cout << "Element: " << element << std::endl;
+    }
+
+    void test_000()
+    {
+        // STL  // vector / längenveränderbares Array
+
+        std::vector<int> numbers;  // STL-Container
+
+        numbers.reserve(80);
+
+        for (int i = 0; i < 100; ++i) {
+
+            numbers.push_back(2 * i);
+
+            // Capacity: wird bei Erreichen der Grenze um den Faktor 1.5 erweitert
+
+            std::cout << "Size: " << numbers.size() << ", Capacity: "
+                << numbers.capacity() << std::endl;
+        }
+
+        // STL-Algorithmen   // STL-Iterator: Position in einem STL-Container
+        std::for_each(
+            numbers.begin(),
+            numbers.end(),
+            tueWas
+        );
+
+    }
+
     void test_00()
     {
         Comparer obj{ false };
-        bool result = obj(1, 2);
+
+        bool result = obj (1, 2);
+        
         std::cout << std::boolalpha << result << std::endl;
     }
 
@@ -41,13 +80,17 @@ namespace Lambdas {
         class LocalComparer
         {
         private:
-            bool m_flag;
+            /* mutable */ bool m_flag;
 
         public:
             LocalComparer() : m_flag{ true } {}
             LocalComparer(bool flag) : m_flag{ flag } {}
 
             bool operator() (int n1, int n2) const {
+
+                // m_flag = false;
+
+                std::cout << "  .. local operator(): vergleiche " << n1 << " mit " << n2 << std::endl;
                 return (m_flag) ? n1 < n2 : n1 > n2;
             }
         };
@@ -59,13 +102,37 @@ namespace Lambdas {
         }
         std::cout << std::endl;
 
-        std::sort(std::begin(vec), std::end(vec), compare);
-        // or
-        std::sort(std::begin(vec), std::end(vec), Comparer{});
-        // or
-        std::sort(std::begin(vec), std::end(vec), Comparer{false});
-        // or
-        std::sort(std::begin(vec), std::end(vec), LocalComparer{});
+        //std::sort(
+        //    std::begin(vec),
+        //    std::end(vec),
+        //    compare
+        //);
+        //// or
+        //std::sort(
+        //    std::begin(vec),
+        //    std::end(vec), 
+        //    Comparer(false)
+        //);
+        //// or
+        //std::sort(std::begin(vec), std::end(vec), Comparer{false});
+        //// or
+        //std::sort(
+        //    std::begin(vec),
+        //    std::end(vec),
+        //    LocalComparer()
+        //);
+
+
+        // Lambda: Funktion ohne Namen // Instanz einer Klasse mit operator()
+
+        std::sort(
+            std::begin(vec),
+            std::end(vec),
+            [] (int n1, int n2) {
+                std::cout << "  Lambda: vergleiche " << n1 << " mit " << n2 << std::endl;
+                return n1 < n2; 
+            }
+        );
 
         for (int n : vec) {
             std::cout << n << ' ';
@@ -111,8 +178,12 @@ namespace Lambdas {
 
     void test_04() {
 
+       // int (*fp) (int, int, int);
+
+        // int  (int, int, int);
+
         // defining a lambda without 'auto'
-        std::function<int(int, int, int)> threeArgs([](int x, int y, int z) {
+        std::function< int(int, int, int) > threeArgs([](int x, int y, int z) {
             return x + y + z; 
             }
         );
@@ -127,9 +198,28 @@ namespace Lambdas {
         // in the scope of the lambda: We do so by defining a variable
         // in the lambda-capture without specifying its type:
 
-        // lambda with variable definition
-        auto lambda = [variable = 10] () { return variable; };
+        // lambda with instance variable definition
+
+        // mutable: removes const-ness of operator()
+
+        auto lambda = [variable = 10] () mutable {    // Type Deduction
+            
+            variable ++;
+            
+            return variable; 
+        };
+
         std::cout << lambda() << std::endl;
+        std::cout << lambda() << std::endl;
+        std::cout << lambda() << std::endl;
+        return;
+
+
+
+
+
+
+
 
         // Captures default to 'const value':
         // The mutable keyword removes the 'const' qualification from all captured variables
@@ -146,8 +236,8 @@ namespace Lambdas {
 
     void test_06() {
 
-        int n = 1;
-        int m = 2;
+        int n = 1;   // lokale Variable
+        int m = 2;   // Closure (JavaScript)
 
         auto l1 = [=] {
             std::cout << "Copy:      " << n << " " << m << std::endl;
@@ -189,13 +279,13 @@ namespace Lambdas {
     auto test_07_helper_b() {
 
         int n = 1;
-        int m = 2;
+        int m = 2;   // Closure: Stack (JavaScript:  Heap)
 
         auto lambda = [&] {
             std::cout << "Reference: " << n << " " << m << std::endl;
         };
 
-        return lambda;  // I would't do this never ever :-)
+        return lambda;                                                                                  // I would't do this never ever :-)
     }
 
     void test_07() {
@@ -218,7 +308,7 @@ namespace Lambdas {
         // IIFE -Immediately Invoked Functional Expression:
         // Inline-definition and direct invocation of lambda funtion:
         
-        std::cout << [](int l, int r) { return l + r; } (11, 12) << std::endl;
+        std::cout << [] (int l, int r) { return l + r; } (11, 12) << std::endl;
 
         // Use case for IIFE:
         // This kind of expression might be useful when you have
@@ -227,7 +317,7 @@ namespace Lambdas {
         auto constexpr ConstValue = [] () {
             /* several lines of code ... - "very complex" computation */
             return 123;
-        }();
+        } ();
 
         std::cout << "Const Value: " << ConstValue << std::endl;
     }
@@ -235,17 +325,18 @@ namespace Lambdas {
 
 void main_lambdas()
 {
-    using namespace Lambdas;
-    test_00();
-    test_01();
-    test_02();
-    test_03();
-    test_04();
-    test_05();
-    test_06();
+    using namespace Lambdas; 
+    //test_000();
+    //test_00();
+    //test_01();
+    //test_02();
+    //test_03();
+    //test_04();
+    //test_05();
+    //test_06();
     test_07();
-    test_08();
-    test_09();
+    //test_08();
+    //test_09();
 }
 
 // =====================================================================================

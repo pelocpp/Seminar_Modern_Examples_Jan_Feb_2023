@@ -16,4 +16,143 @@ a) Github.com/pelocpp
 
 b) Visual C++
 
+// =====================================================================
 
+== Inhalt
+
+== Feedback Runde: 
+
+==  Was sind meine Erwartungen
+==  Wo stehe ich (aktuell)  / andere Programmiersprachen
+==  Was soll / muss auf jeden Fall drin sein?
+==  Was braucht es nicht
+
+--------------
+
+Pausen:  Eine am Vormittag (10.30)
+
+Mittag:  12 bis 13 Uhr
+
+Nachmittag: ca. 14.30
+
+Bis ca. 15.30 / 16 Uhr: 
+
+Übungen: Source-Code    // Lösungen  // Online-Compiler
+
+Bis 16.30 Online Erreichbar.
+
+Aber: Am nächsten Tag zum Einstieg
+
+Fragen: Bitte unterbrechen !!!
+
+--------------
+
+// Java, C#, JavaScript, Flutter (Dart), ...., Rust, Python  
+
+Python
+
+Embedded Anwendungen  / Überblick / 
+
+Multithreading: 3 * Yes
+
+CoRoutinen (Starthilfe)
+
+--------------
+
+C++:
+
+== Werte-Semantik  (Value / Kopie)   // Performanz: schlecht
+
+== Referenz-Semantik (Reference / "Pointer" )  // Performanz: gut
+
+----------
+
+Viele andere Programmiersprachen (C#, Java, ...):
+
+== Kennen nur Referenz-Semantik
+
+----------
+
+Referenzen beschreiben Objekte (intern: über eine Adresse)
+
+===> Move-Semantik
+
+SW: Weiche // Überladen von Funktionen
+
+----------
+
+Move-Semantik:
+
+==:  ... 990    // Wurde freigegeben
+==:  ... B50    // Ist im Vektor abgelegt
+
+==> Überladung des Kopier-Operators
+==> Weiche
+
+
+==:  ... 730    // Objekt wird angelegt
+
+Beim Kopieren in den Vektor WIRD ES VERSCHOBEN:
+
+Optimierung im Vergleich zu Oben dar.
+
+----------
+
+Es gibt da auch eine Methode (am Vektor):  emplace_back.
+
+Wie passt die zu diesem Thema?
+
+==> Auch bei emplace_back haben wir es mit EINEM Objekt zu tun
+    (  es sind keine unnötigen Kopien vorhanden!)
+
+==> emplace_back kann nicht immer angewendet werden.
+
+==> Nur nebenbei: emplace_back hat eine ANDERE Schnitttstelle !!!
+    Parameter für einen BigData Konstruktor
+    
+==> emplace_back ist ein Resultat der Technik "Variadische Templates"
+
+----------
+
+push_back:   STL  // std::vector
+
+Array:
+
+std::vector: Ist ein flexibel langes Arrays.
+
+Intern:  Puffer ==> intern automatisch verlängert
+
+----------
+
+Zoom:  Thomas Lehmann  ==> Peter Loos
+
+----------
+
+C++:
+
+OO:  Objekt-Orientierte Programmierung
+
+GP:  Generische Programmierung
+
+GP:  STL  Standard Bibliothek:  GP
+
+Anmerkung:
+
+OO: Bjarne Stroustrup
+
+GP: Alexander Stepanov
+
+======================================
+
+auto x = 123;
+
+======================================
+
+Spezielles:
+
+
+shortest lambda on earth:
+
+auto nothing = [] () {};
+
+auto nothing2 = [] () {} ();
