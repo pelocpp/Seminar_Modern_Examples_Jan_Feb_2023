@@ -10,7 +10,7 @@ namespace UniquePointerGeneral {
     std::unique_ptr<int> loadUniquePointer()
     {
         std::unique_ptr<int> ptr{ std::make_unique<int>(100) };
-        return ptr;
+        return ptr;   // Rückgabe am Stack als Kopie: Nein, wird anders umgesetzt
     }
 
     void storeUniquePointer(std::unique_ptr<int>& ptr)
@@ -19,7 +19,7 @@ namespace UniquePointerGeneral {
         (*ptr)++;
         std::cout << "*ptr:    " << *ptr << std::endl;
 
-        // take ownership right now:
+        // take ownership right now:  // Don't do that
         // std::unique_ptr<int> ptr2{ std::move(ptr) };
     }
 
@@ -78,7 +78,7 @@ namespace UniquePointerGeneral {
         storeUniquePointer(ptr);
 
         // C++ Core Guidelines
-        storeUniquePointerAlternate(ptr.get());
+        storeUniquePointerAlternate(ptr.get());  // get ist eigentlich NOT RECOMMENDED
 
         // does this work?
         std::cout << "*ptr:   " << *ptr << std::endl;
@@ -118,7 +118,7 @@ namespace UniquePointer_SourceSinkPattern
     }
 }
 
-void main_unique_ptr()
+void main_unique_ptr() 
 {
     using namespace UniquePointerGeneral;
     test_01();

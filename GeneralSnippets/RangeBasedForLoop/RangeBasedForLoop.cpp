@@ -37,11 +37,14 @@ namespace RangeBasedForLoop {
         // =========================================================================
         // "Classic style" examples
 
-        // a) Very, very old style ... I wouldn't do this ... C-stylistic
+        // a) Very, very old style ...  C-stylistic
         for (size_t i = 0; i != vec.size(); ++i) {
             std::cout << vec[i] << " ";
         }
         std::cout << std::endl;
+
+
+
 
         // b) Looks like C++, very classic style
         std::for_each(
@@ -51,13 +54,20 @@ namespace RangeBasedForLoop {
         );
         std::cout << std::endl;
 
+
+
+
+
         // c) Same as b), modified ranges
         std::for_each(
-            std::next(std::begin(vec)),    // Iterator-object for begin of range
-            std::prev(std::end(vec)),      // Iterator-object for end of range
+            std::next(std::begin(vec)),    // Iterator-object for begin of range  "2. ten"
+            std::prev(std::end(vec)),      // Iterator-object for end of range  "vorletzten"  
             processElement                 // function pointer
         );
         std::cout << std::endl;
+
+
+
 
         // d) Looks like C++, classic style, 'functor'-stylistic
         std::for_each(
@@ -67,12 +77,17 @@ namespace RangeBasedForLoop {
         );
         std::cout << std::endl;
 
+
+
+
+
         // e) Using STL algorithm std::for_each with a lambda: Looks like C++, modern style
         std::for_each(
             std::begin(vec),               // Iterator-object for begin of range
             std::end(vec),                 // Iterator-object for end of range
             [](int n) {                    // anonymous method (lambda)
                 std::cout << n << " ";
+                // break;
             }
         );
         std::cout << std::endl;
@@ -81,6 +96,7 @@ namespace RangeBasedForLoop {
         // Range-based 'for' Loop examples
 
         // f) Using Range-based 'for' Loop: Looks like C++, very modern style
+        
         for (int n : vec) {
             std::cout << n << " ";
             if (n == 2)  // break is possible
@@ -88,25 +104,50 @@ namespace RangeBasedForLoop {
         }
         std::cout << std::endl;
 
+
+
+
+
         // g) Same as f), using 'const int&'
         for (const int& n : vec) {
             std::cout << n << " ";
         }
         std::cout << std::endl;
 
-        // h) Same as f): Using 'auto' keyword to cause type inference to be used
-        for (auto n : vec) {
+
+
+
+        // h) Same as f): Using 'auto' keyword to cause type deduction to be used
+        for (auto n : vec) {    // per Value !!!!  Kopie !!
             std::cout << n << " ";
         }
         std::cout << std::endl;
+
+
+
+
+
+
 
         // i) Same as g), using 'const auto&': type inference by reference
-        for (const auto& n : vec) {
+
+        // int index{};
+
+        for (const auto & n : vec) {
             std::cout << n << " ";
+
+           // ++index;
         }
         std::cout << std::endl;
 
-        // j) Real C++: How the compiler 'sees' a Range-based 'for' Loop - you never ever do this
+
+        // index = 123;
+
+
+
+
+        // j) Real C++: How the compiler 'sees' a Range-based 'for' Loop - 
+
         std::vector<int>::iterator begin = std::begin(vec);
         std::vector<int>::iterator end = std::end(vec);
 
@@ -117,6 +158,10 @@ namespace RangeBasedForLoop {
             ++begin;
         }
         std::cout << std::endl;
+
+
+
+
 
         // k) Same as h), using 'auto'
         auto begin2 = std::begin(vec);
@@ -130,16 +175,25 @@ namespace RangeBasedForLoop {
         }
         std::cout << std::endl;
 
+
         // l) Range-based 'for' loop with initializer,
         // we can now use the index variable inside the for statement
-        for (int index{}; int n : vec) {
+        // C++ 20
+        for (int index{} ; int n : vec) {
             std::cout << index << ": " << n << " " << std::endl;
             ++index;
         }
+
+        // C++ 20:
+        if ( int index{} ; index > 0) {
+            std::cout << "bin hier";
+        }
+
+        // index = 123;
     }
 }
 
-void main_range_based_for_loop()
+void main_range_based_for_loop() 
 {
     using namespace RangeBasedForLoop;
     test_01(); 

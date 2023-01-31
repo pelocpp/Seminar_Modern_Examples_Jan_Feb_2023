@@ -32,11 +32,12 @@ namespace Literals_With_Separators {
 
 namespace Literals_Color_Runtime {
 
-    class Color {
+    class Color 
+    {
         friend std::ostream& operator<< (std::ostream&, const Color&);
 
     private:
-        uint8_t m_r;
+        uint8_t m_r;  // 0 .. 255
         uint8_t m_g;
         uint8_t m_b;
 
@@ -58,7 +59,7 @@ namespace Literals_Color_Runtime {
     }
 
     // literal operator ("cooked" version)
-    Color operator"" _rgb(unsigned long long int value) {
+    Color operator"" _rgb (unsigned long long value) {
 
         if (value > 0xFFFFFF) {
             throw std::runtime_error("literal too large");
@@ -68,8 +69,10 @@ namespace Literals_Color_Runtime {
         uint8_t g{ static_cast<uint8_t>((value & 0x0000FF00) >> 8) };
         uint8_t b{ static_cast<uint8_t>((value & 0x000000FF) >> 0) };
 
-        return { r, g, b };
+        return Color { r, g, b };
     }
+
+
 
     // literal operator ("raw" version)
     Color operator"" _rgb(const char* literal, size_t length) {
@@ -95,7 +98,11 @@ namespace Literals_Color_Runtime {
     }
 
     void test_02() {
+
+      // int wert = 111111111111111111111111111111111111111111111111111111111;
+
         Color red = 0xFF0000_rgb;
+
         std::cout << red << std::endl;
         Color magenta = 0xFF00FF_rgb;
         std::cout << magenta << std::endl;
@@ -162,8 +169,11 @@ namespace Literals_Color_CompileTime {
         uint8_t g{ static_cast<uint8_t>((value & 0x0000FF00) >> 8) };
         uint8_t b{ static_cast<uint8_t>((value & 0x000000FF) >> 0) };
 
-        return { r, g, b };
+        return Color { r, g, b };
     }
+
+
+
 
     constexpr size_t hexstoi(const char*);
     constexpr bool isHex(char);
@@ -252,7 +262,7 @@ namespace Literals_Color_CompileTime {
     // throws errors at compile time
     void test_03_with_errors() {
         // value outside rgb range
-        // constexpr Color col1 = 0x1FFFFFF_rgb;
+        // constexpr Color col1 = 0x1FF11FF_rgb;
 
         // illegal hexadecimal digit
         // constexpr Color col2 = "0x00GG00"_rgb;

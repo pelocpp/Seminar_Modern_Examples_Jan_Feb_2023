@@ -21,7 +21,7 @@ namespace Exercises_Lambdas {
         }
 
         struct Even {
-            void operator()(int val) const {
+            void operator() (int val) const {
                 if ((val % 2) == 0) {
                     std::cout << val << " is even." << std::endl;
                 }
@@ -40,7 +40,7 @@ namespace Exercises_Lambdas {
                     std::cout << val << " is even." << std::endl;
                 }
             };
-            lambdaEven(16);
+            lambdaEven (16);
         }
 
         void testExercise_01b() {
@@ -79,6 +79,7 @@ namespace Exercises_Lambdas {
         }
 
         void testExercise_01c() {
+
             std::vector<int> values(20);
 
             std::generate(
@@ -87,11 +88,13 @@ namespace Exercises_Lambdas {
                 [count = 1]() mutable { return count++; }
             );
 
+           // auto divisor2 = 3;
+
             // 'divisor' defined within capture clause 
             std::for_each(
                 std::begin(values), 
                 std::end(values),
-                [divisor = 3](int val) {
+                [divisor = 3](int val) {   // name = vorbelegungswert;
                     if (!(val % divisor)) {
                         std::cout << val << std::endl;
                     }
@@ -106,7 +109,7 @@ namespace Exercises_Lambdas {
             std::for_each(
                 std::begin(values),
                 std::end(values),
-                [=](int val) {
+                [=] (int val) {
                     if (!(val % divisor)) {
                         std::cout << val << std::endl;
                     }

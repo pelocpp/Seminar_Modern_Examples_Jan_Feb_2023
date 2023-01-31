@@ -56,7 +56,7 @@ namespace Exercises_Generic_Lambdas {
                 return object > 50;
             };
 
-            std::vector<Person> personValues{
+            std::vector<Person> personValues {
                 Person{ "Hans", 40 },
                 Person{ "Sepp", 60 }
             };

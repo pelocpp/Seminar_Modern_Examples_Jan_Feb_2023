@@ -8,12 +8,13 @@
 #include <numeric>
 #include <variant>
 #include <functional>
+#include <type_traits>
 
 namespace VariantDemo {
 
     void test_01() {
 
-        std::variant<int, float, std::string> var{ 10.5f };
+        std::variant<int, float, std::string> var{ 10.5F };
 
         std::cout
             << var.index()
@@ -102,16 +103,41 @@ namespace VariantDemo {
             std::cout << "int! => " << *intPtr << std::endl;
     }
 
+    // using a generic visitor (matching all types in the variant)
+    auto visitorZuerst = [](const auto& elem)
+    {
+        std::cout << "Element: " << elem << std::endl;
+    };
+
+    auto visitor = [](const auto& elem)
+    {
+        using CurrentType = decltype(elem);   // int&
+
+        // Referenz - Entferner
+        using CurrentTypeWithoutReference 
+            = std::remove_reference<CurrentType>::type;     // int, also ohne &
+
+        // Const Entferner 
+
+        if constexpr (std::is_same<CurrentTypeWithoutReference, int>::value == true) {   // 'if (CurrentType == int)'
+
+            std::cout << "Tue etwas fuer int: " << elem << std::endl;
+        }
+        else if (std::is_same<CurrentTypeWithoutReference, std::string>::value == true) {
+            std::cout << "Tue etwas fuer std::string: " << elem << std::endl;
+        }
+        else  {
+            std::cout << "Spaeter: " << elem << std::endl;
+        }
+
+
+    };
+
     // -------------------------------------------------------------------
 
     void test_03() {
 
-        std::variant<int, float, std::string> var{ 3.5f };
-
-        // using a generic visitor (matching all types in the variant)
-        auto visitor = [](auto const& elem) {
-            std::cout << elem << std::endl;
-        };
+        std::variant<int, float, std::string> var{ 123.0f };
 
         std::visit(visitor, var);
 
@@ -141,6 +167,7 @@ namespace VariantDemo {
 
     // -------------------------------------------------------------------
 
+    // Funktor  // Callable // Aufrufoperator operator()
     class Visitor
     {
     public:
@@ -263,14 +290,14 @@ namespace VariantDemo {
 void main_variant()
 {
     using namespace VariantDemo;
-    test_01();
-    test_02();
+    //test_01();
+    //test_02();
     test_03();
-    test_04();
-    test_05();
-    test_06();
-    test_07();
-    test_08();
+    //test_04();
+    //test_05();
+    //test_06();
+    //test_07();
+    //test_08();
 }
 
 // =====================================================================================

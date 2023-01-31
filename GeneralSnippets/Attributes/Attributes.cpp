@@ -15,15 +15,12 @@ namespace StandardAttributes {
 
     void test_01()
     {
-#if defined (DEMONSTRATE_WARNINGS_AND_ERRORS)
-
         int result = discard_test();
 
         // another call to discard_test:
         // 'warning: discarding return value of function with 'nodiscard' attribute'
         discard_test();
 
-#endif
     }
 
     [[ noreturn ]] void criticalFunction() {
@@ -84,6 +81,22 @@ namespace StandardAttributes {
         case -1:
             std::cout << "Undefined Digit" << std::endl;
         }
+    }
+}
+
+void test()
+{
+    int a, b;
+
+    a = 1;
+    b = 2;
+
+    if (a > b) [[ likely ]] {
+        std::cout << "Tue das";     // 99%
+    }
+    else [[ unlikely ]]
+    {
+        std::cout << "Tue dies";    // 1%
     }
 }
 

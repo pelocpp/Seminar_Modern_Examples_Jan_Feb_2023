@@ -78,16 +78,18 @@ namespace WeakPointer {
 
     class ParentNode {
     private:
-        std::shared_ptr<RightNode> m_rightNode;   // <== shared or weak ?
-        std::shared_ptr<LeftNode> m_leftNode;     // <== shared or weak ?
+        std::weak_ptr<RightNode> m_rightNode;   // <== shared or weak ?
+        std::weak_ptr<LeftNode> m_leftNode;     // <== shared or weak ?
 
     public:
         ParentNode() {
             std::cout << "c'tor ParentNode" << std::endl;
         }
+
         ~ParentNode() {
             std::cout << "d'tor ParentNode" << std::endl;
         }
+
         void setRightNode(const std::shared_ptr<RightNode> right) {
             m_rightNode = right;
         }
@@ -126,6 +128,7 @@ namespace WeakPointer {
         }
     };
 
+
     void test_02()
     {
         std::shared_ptr<ParentNode> parent{ new ParentNode {} };
@@ -135,6 +138,7 @@ namespace WeakPointer {
         parent->setRightNode(rightNode);
         parent->setLeftNode(leftNode);
     }
+
 
     void test_03()
     {
@@ -151,13 +155,13 @@ namespace WeakPointer {
     }
 }
 
-void main_weak_pointer()
+void main_weak_pointer() 
 {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
     using namespace WeakPointer;
-    test_01();
+   // test_01();
     test_02();
-    test_03();
+   // test_03();
 }
 
 // =====================================================================================

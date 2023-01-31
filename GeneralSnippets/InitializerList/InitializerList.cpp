@@ -15,12 +15,14 @@ namespace InitializerList {
     int myIntAdderFunction(std::initializer_list<int> list)
     {
         int result{};
+
         std::for_each(
             std::begin(list),
             std::end(list),
             [&result](int value) {
                 result += value; 
             });
+
         return result;
     }
 
@@ -32,10 +34,14 @@ namespace InitializerList {
         std::cout << std::endl;
     }
 
-    void test_01() {
+    void test_01()
+    {
         // testing functions expecting lists in function call
-        int sum = myIntAdderFunction({ 1, 3, 5, 7, 9 });
+
+        int sum = myIntAdderFunction ( { 1, 3, 5, 7, 9, 1, 2, 3, 4, 6 } );
+
         std::cout << sum << std::endl;
+
         std::cout << myIntAdderFunction({ 2, 4, 6, 8 }) << std::endl;
     }
 
@@ -49,7 +55,8 @@ namespace InitializerList {
     // =================================================================================
 
 
-    class Point {
+    class Point
+    {
     public:
         Point() : Point(0.0, 0.0) {}
         Point(double x, double y) : m_x{ x }, m_y{ y } {}
@@ -63,7 +70,8 @@ namespace InitializerList {
     };
 
     // container-like classes
-    class Polygon {
+    class Polygon
+    {
     public:
         Polygon(std::initializer_list<Point> elements)
             : m_elements{ elements } {};
@@ -75,6 +83,8 @@ namespace InitializerList {
     class FixedSizePolygon {
     public:
         FixedSizePolygon(std::initializer_list<Point> elements) {
+
+            // 3 Methoden: begin, end, size
 
             const Point* iter = std::begin(elements);
             size_t numElems = (elements.size() <= 16) ? elements.size() : 16;
@@ -92,11 +102,22 @@ namespace InitializerList {
     void test_03() {
 
         Polygon polygon1 {
+            { 45.0, 45.0 },
+            { 60.0, 60.0 },
+            { 120.0, 120.0 },
+            { 180.0, 180.0 }
+        };
+
+        Polygon polygon11{
             Point { 45.0, 45.0 },
             Point { 60.0, 60.0 },
             Point { 120.0, 120.0 },
             Point { 180.0, 180.0 }
         };
+
+
+
+
 
         FixedSizePolygon polygon2 {
             Point { 45.0, 45.0 },
@@ -113,13 +134,13 @@ namespace InitializerList {
     public:
         TinyContainer() {}
         TinyContainer(int value) {}
-        TinyContainer(std::initializer_list<int>) {};
+       // TinyContainer(std::initializer_list<int>) {};
         TinyContainer(const std::vector<int>&) {};
     };
 
     void test_04() {
         TinyContainer tc0;                                 // TinyContainer::TinyContainer ()
-        TinyContainer tc1{ 1, 2, 3, 4 };                   // TinyContainer::TinyContainer (std::initializer_list<int>)
+        TinyContainer tc1{ { 1, 2, 3, 4} };                   // TinyContainer::TinyContainer (std::initializer_list<int>)
         TinyContainer tc2{ 1 };                            // TinyContainer::TinyContainer (std::initializer_list<int>)
         TinyContainer tc3(1);                              // TinyContainer::TinyContainer (int)
         TinyContainer tc4{ };                              // TinyContainer::TinyContainer ()
@@ -213,7 +234,7 @@ namespace InitializerList {
     }
 }
 
-void main_initializer_list()
+void main_initializer_list() 
 {
     using namespace InitializerList;
     test_01(); 

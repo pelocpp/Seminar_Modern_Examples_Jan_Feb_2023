@@ -214,3 +214,298 @@ Empty Project (VS Studio)
 == Generischen Lambda Funktionen:  Aufgabe 1
 
 ==============================================
+
+Dienstag:
+
+constexpr
+
+Benutzerdefinierte Literale
+
+Initialisierungs-Liste
+
+Verschiedenes
+
+Smart Pointer
+
+std::variant
+
+oder
+
+Type Traits
+
+Übungen:
+
+
+=================================================
+
+Literal // Konstante
+
+Konstante  => Objekte
+
+auto wert = 10.0F;   // float
+
+So etwas wie 'F'  können wir selbst machen:
+
+0x00FF00_rgb   // green    // Color 
+
+0x00FF00_farbe   // green    // Color 
+
+100_km
+
+50_kg
+
+
+Abbildung von technologischen Konstanten.
+
+Wie ???  Implementation of literal operator:  operator ""
+
+3 Parameter Möglichkeiten:
+
+i)   unsigned long long 
+
+ii)  long double
+
+iii) char*
+
+
+Beispiel:  Color  RGB  Farbmodell
+
+unsigned int farbe = 0x00FF00;
+
+vs
+
+Color farbe = 0x00FF00_rgb;
+
+===============================================
+
+std::initializer_list<T>:    KEIN HEAP // NUR STACK
+
+vs.
+
+std::vector<T>:              DATEN AM HEAP
+
+
+Performanz Optimierung:
+
+Heap / Stack:   
+
+kein Heap  // kein 'new': new benötigt Laufzeit
+
+Vorschau:
+
+std::string        'new'
+std::string_view   kein 'new'
+
+
+std::initializer_list<T> ist nicht mit einem STL Container zu vergleichen:
+
+Es ist ein Hilfs-Container  // Light-Weight Container // Leichtgewichtiger Container
+
+==============================================
+
+a) std::vector
+
+b) Aufruf von push_back
+
+Frage: Wird bei push_back new aufgerufen ?
+
+Antwort: Hängt vom Wert von Capacity ab !!!
+
+===============================================
+
+Warum size_t:
+
+und nicht int:    int kann aber auch negative Werte haben
+
+size_t ist OHNE Vorzeichen.
+
+===============================================
+
+Smart Pointer
+
+What's wrong with new ???
+
+int ip* = new int [100];
+
+...
+
+((  malloc / free  ))
+
+delete[] ip;  // <============= Wer ruft auf ???
+
+REGEL:  C/ C++
+
+Java, C#:   KEIN delete // Garbage Collector.
+
+
+void func (int* p)   <=== 
+
+Was ist das Problem:
+
+int ip* = new int [100];
+
+...
+
+func (ip);    // Wer ist jetzt der Besitzer des Zeigers
+
+...
+
+Suche nach fehlenden delete's:  Death March  // Todesmarsch
+
+https://www.medimops.de/edward-yourdon-death-march-yourdon-press-computing-series-gebundene-ausgabe-M00137483104.htm
+
+
+Anderen Lösungen ...
+
+Strategie:
+
+A) Man gehe bzgl. des Zeigers zu einer Hüllenklasse / Hüllenobjekt über
+
+B) OO:  Konstruktor
+        Destruktor
+
+c) Determinismus: Destruktor wird AUTOMATISCH aufgerufen
+
+D) Hüllenobjekte sollten am Stack liegen
+
+E) Konstruktor: Wird new aufgerufen / Zeiger wird an den Konstruktor übergeben
+
+F) Destruktor: Wird delete aufgerufen
+
+(( RAII:  ähnlich, aber für Resources  (Socket-Verbindung, Sql-Connection, ) ))
+
+Details:
+
+i)  Ein Hüllenobjekt (eine Zeigervariable) kann zu einem Zeitpunkt nur EINEN Besitzer haben.
+
+    std::unique_ptr
+
+ii) Ein Hüllenobjekt (eine Zeigervariable) kann mehrere Besitzer haben.
+
+    Fragen:  Welcher Destruktor-Aufruf gibt den Zeiger frei. 
+
+    Zählervariablen / Reference Counter 
+
+    std::shared_ptr (std::weak_ptr)
+
+Fazit:    int* ====> std::unique_ptr<int>  oder 
+
+          int* ====> std::shared_ptr<int>
+          
+Kein 'int*' mehr in unserem Quellcode: Call-to-Action
+
+int*   : Raw Zeiger  // roher Zeiger
+
+1. Hinweis: Die Rule-of-3 oder auch Rule-of-5 werden unterstützt.
+
+2. Hinweis: Ein std::unique_ptr - Objekt kann ÜBERHAUPT NICHT kopiert werden.
+
+            sehr wohl aber verschoben !
+
+================================================================
+
+Hinweis:   Was ist Copy Elision ???
+
+to elide == ignorieren, übergehen 
+
+Es wird ein (unnützer) Kopiervorgang übergangen.
+
+================================================================
+
+Problem / Beobachtung:
+
+Es kann sein,
+dass bei Einsatz von std::shared_ptr der Speicherbereich NICHT freigegeben wird.
+
+WHY ?????????????????????????????
+
+Lösung: std::weak_ptr
+
+i)    Handling: std::weak_ptr
+
+ii)   Beispiel für die o.a. Beobachtung (Speicherbereich NICHT freigegeben).
+
+
+Es gibt GENAU DANN ein Problem, wenn zwei std::shared_ptr  - Objekte GEGENSEITIG auf sich zeigen:
+
+A ==> B und B ==> A 
+
+Zyklus.
+
+================================================================
+
+Fazit über Alles: Go for Smart Pointer
+
+
+Umstieg:    Ersten Ansatz:   Go-for-Unique oder Go-for-Shared ???
+
+Go-for-Unique kommt dem klassischen Pointer am nächsten:  Exklusiver Besitz.
+
+================================================================
+
+std::variant:
+
+Kann Daten unterschiedlichen Typs aufbewahren.
+
+"Excel" / Google Sheets:
+
+Zellen:  Num. Wert / Datum / Currency / Zeichenkette / 
+
+         int, double, Time, std::string
+
+================================================================
+
+Typ Spuren:  Type Traits
+
+================================================================
+
+
+Was tun wir gerade:
+
+a) Es gibt ein Keyword auto:
+
+   Variablen-Deklarationen
+
+b) Lambda-Funktionen:
+
+   i)  Alle Parameter sind KONKRET:  int, double, .......
+   ii) Ein Parameter kann 'auto' sein   
+
+   ===> Die Lambda-Funktion ist generisch 
+   ===> Pro KONKRETEM Datentyp muss Maschinencode für eine reale (konkrete) Lambda-Funktionen
+        erzeugt werden
+
+
+   Beispiel: Übung zu isGreaterThanFifty
+
+c) Es gibt PRINZIPIELL die Möglichkeit, zu hinterfragen,
+   von welchem Datentyp ein 'auto' Parameter ist:
+
+   Wozu: Dann kann man pro Datentyp eine UNTERSCHIEDLICHE Aktion ausführen.
+
+d) Ich lerne den Abschnitt "Type Traits" kennen :)
+
+=========================================
+
+===> Programmierung / Betrachtung von Datentypen ZUR LAUFZEIT !!!
+
+template <typename T, typename U>
+func (T p1, U p2)
+{
+}
+
+=========================================
+
+Java:  Reflection-API
+
+=========================================
+
+Übungen:
+
+A) Shared Pointer:  Quiz 1 und Quiz 2
+
+B) Initialisierung: Aufgabe 1 und 2
+
+C) Utility Klassen: Aufgabe 1   // Reflection  // Typen zur Übersetzungszeit
+
+Siehe auch Datei StdVariant.cpp
