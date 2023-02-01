@@ -1,0 +1,31 @@
+// =====================================================================
+// Notizzettel.txt
+// =====================================================================
+
+Modernes C++ / Online Seminar New Elements Nürnberg
+
+Peter Loos // "Du"
+
+peter.loos@gmx.de
+
+// =====================================================================
+
+Mittwoch:
+
+Besprechung der Übungen
+
+Templates
+
+Variadische Templates
+
+Folding
+
+Structured Binding
+
+Utility-Klassen (std::tuple)
+
+Structured Binding
+
+STL-Algorithmen
+  std::transform
+  std::back_inserter (Iterator-Adapter)

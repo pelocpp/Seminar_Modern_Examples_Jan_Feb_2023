@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cpp_ModernExamples", "GeneralSnippets\GeneralSnippets.vcxproj", "{7B6D68B9-7F45-4160-BC1C-9000B1BDFDC7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cpp_ModernExamples_KOPIE", "GeneralSnippets\GeneralSnippets.vcxproj", "{7B6D68B9-7F45-4160-BC1C-9000B1BDFDC7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{102B3C39-F62A-4013-9F16-0EB8D0E9DC99}"
 	ProjectSection(SolutionItems) = preProject
 		Notizzettel.txt = Notizzettel.txt
+		Notizzettel_Dienstag.txt = Notizzettel_Dienstag.txt
+		Notizzettel_Mittwoch.txt = Notizzettel_Mittwoch.txt
 	EndProjectSection
 EndProject
 Global
