@@ -130,7 +130,7 @@ int main()
         //main_decltype();
         //main_default_initialization();
         //main_erase_remove_idiom();
-        //main_exercises();
+        // main_exercises();
         //main_expression_templates();
         //main_generate();
         //main_generic_lambdas();
@@ -187,7 +187,7 @@ int main()
         //main_type_traits();
         //main_uniform_initialization();
         //main_unique_ptr();
-        //main_variadic_templates_intro();
+        main_variadic_templates_intro();
         //main_variadic_templates_working_on_every_argument();
         //main_variadic_templates_sum_of_sums();
         //main_variadic_templates_mixins();
@@ -196,7 +196,7 @@ int main()
         //main_variadic_else_if();
         //main_variadic_templates_examples();
         //main_variadic_templates_more_examples();
-        main_variant();
+        //main_variant();
         //main_virtual_destructor();
         //main_virtual_override_final();
         //main_weak_pointer();

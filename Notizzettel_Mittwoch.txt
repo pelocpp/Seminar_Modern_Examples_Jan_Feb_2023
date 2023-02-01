@@ -12,20 +12,177 @@ peter.loos@gmx.de
 
 Mittwoch:
 
-Besprechung der Übungen
+Besprechung der Übungen:
+
+A) Shared Pointer:  Quiz 1 und Quiz 2
+
+B) Initialisierung: Aufgabe 1 und 2
+
+C) Utility Klassen: Aufgabe 1   // Reflection  // Typen zur Übersetzungszeit
+
 
 Templates
 
-Variadische Templates
+Variadische Templates - C++ 11
 
-Folding
+Structured Binding - C++ 17
 
-Structured Binding
-
-Utility-Klassen (std::tuple)
-
-Structured Binding
+Utility-Klassen (std::tuple, std::optional)
 
 STL-Algorithmen
   std::transform
-  std::back_inserter (Iterator-Adapter)
+  std::vector / std::back_inserter (Iterator-Adapter)
+
+
+Folding - C++ 17
+
+
+
+Übungen:
+
+Variadischen Templates:
+
+  Aufgabe 1
+  Aufgabe 2
+  Aufgabe 7
+
+Utility Klassen:
+  Aufgabe 2
+
+STL-Algorithmen:
+  Aufgabe 2  (Structured Binding)
+
+
+
+
+=================================================
+
+Grundlagen zu Templates:
+
+Datei 'TemplatesClassBasics01.cpp'
+
+OO: Objekt-Orientiertes Paradigma
+
+GP: Generische Programmierung
+
+
+Siehe auch
+
+https://github.com/pelocpp/cpp_modern_examples/blob/master/GeneralSnippets/TemplateClassBasics/TemplatesClassBasics.md
+
+
+Feature:
+
+Partielle Template Spezialisierung.
+
+a) Wir haben ein Template (Calculator)
+
+b) für das eine oder andere T bräuchten wir eine andere Realisierung.
+
+Beispiel:
+
+i)   Calculator 
+ii) Datentyp T = int
+iii)  div : Rundung
+
+Allgemein: Wie wird in C/C++ bei 'int' geteilt / dividiert ?
+
+5 / 7 = 0   // Es wird abgeschnitten
+
+(double): 3.0 / 6.0 = 0.5 
+
+Mein Wunsch: Rundung.
+
+Lösung: Partielle Template Spezialisierung
+
+2 Möglichkeiten:
+
+a) Die ganze Klasse
+b) nur eine / mehrere Methoden
+
+============================================================
+
+Variadische Templates
+
+Verständnis:
+
+a) Debugger: Jepp
+
+b) Tool "Cpp Insights"
+
+https://cppinsights.io/
+
+---------------------------------------------
+
+Dyn. Programmierung:
+
+Memoization:  Da kann man Zwischenergebnisse abspeichern.
+
+Habe ich bei Variadische Templates nicht vorgefunden.
+
+---------------------------------------------
+
+Effizienz:
+
+Pro- vs. Contra:
+
+Aussage:
+
+Ein "Variadische Templates":
+
+a) Dieses muss bzgl. aller Überladungen aufgelöst werden.
+
+   Beispiel: Aufruf mit 10 Aktualparametern:
+   ==> Maschinencode: 10 unterschiedliche Methoden
+
+b) Im Maschinencode spürbar.
+
+Beispiel:  std::make_unique ====> wie oft ???
+
+
+
+
+Ab C++ 11:
+
+zb make_unique
+
+zb emplace_back
+
+
+Letzter Hinweis:
+
+Parameterübergabe an 
+
+    template <typename T, typename ... TARGS> 
+    std::unique_ptr<T> my_make_unique(TARGS ... args)
+
+erfolgt als Kopie:
+
+2 Optionen der Verbesserung:
+
+a) mit const und & :
+
+    template <typename T, typename ... TARGS> 
+    std::unique_ptr<T> my_make_unique(const TARGS& ... args)
+
+b) die perfekte Lösung:
+
+"Universelle Referenz":  && 
+
+Perfektes Weiterleiten:
+
+Was ist, wenn ich das nicht beachte:
+Dann können Kopien entstehen (die man vermeiden könnte).
+
+Literaturhinweise:
+
+https://github.com/pelocpp/cpp_modern_examples/blob/master/GeneralSnippets/PerfectForwarding/PerfectForwarding_01.md
+
+Siehe hier GANZ UNTEN:
+
+https://eli.thegreenplace.net/2014/perfect-forwarding-and-universal-references-in-c//
+
+
+
+Um 13:25 machen wir weiter.
+

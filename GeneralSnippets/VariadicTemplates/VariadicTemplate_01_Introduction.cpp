@@ -6,6 +6,119 @@
 #include <string>
 #include <memory>
 
+namespace VariadicTemplatesIntro_Seminar {
+
+    // Pattern: Fabrik  ==> Es kommen Konstruktoren zum Einsatz
+
+    // Smart-Pointer ==> Es kommen Konstruktoren zum Einsatz
+
+    // Eine Klasse hat mehrere Konstruktoren
+
+    class Unknown {
+    private:
+        int m_var1;
+        int m_var2;
+        int m_var3;
+
+    public:
+        Unknown() : m_var1{ -1 }, m_var2{ -1 }, m_var3{ -1 } {
+            std::cout << "c'tor()" << std::endl;
+        }
+
+        Unknown(int n) : m_var1{ n }, m_var2{ -1 }, m_var3{ -1 } {
+            std::cout << "c'tor(int)" << std::endl;
+        }
+
+        Unknown(int n, int m) : m_var1{ n }, m_var2{ m }, m_var3{ -1 } {
+            std::cout << "c'tor(int, int)" << std::endl;
+        }
+
+        Unknown(int n, int m, int k) : m_var1{ n }, m_var2{ m }, m_var3{ k } {
+            std::cout << "c'tor(int, int, int)" << std::endl;
+        }
+
+        Unknown(int n, std::string m, int k) : m_var1{ n }, m_var3{ k } {
+            std::cout << "c'tor(int, std::string, int) !!!!!!!!!!" << std::endl;
+        }
+
+        friend std::ostream& operator<< (std::ostream&, const Unknown&);
+    };
+
+    std::ostream& operator<< (std::ostream& os, const Unknown& obj) {
+        os
+            << "var1: " << obj.m_var1
+            << ", var2: " << obj.m_var2
+            << ", var3: " << obj.m_var3 << std::endl;
+
+        return os;
+    }
+
+    template <typename T, typename ... TARGS> 
+    std::unique_ptr<T> my_make_unique(TARGS&& ... args)
+    {
+        // Ohne Move-Semantik --- also reine Kopien
+         std::unique_ptr<T> tmp1{ new T{ args ...} };
+
+        // Mit Move-Semantik --- perfektes Weiterleiten
+        std::unique_ptr<T> tmp{ new T{ std::forward<TARGS>(args) ...} };
+
+
+
+        return tmp;
+    }
+
+    void test_seminar() {
+
+       //  std::unique_ptr<Unknown> ptr { std::make_unique<Unknown>(1, 2, 3) };
+
+
+
+        std::unique_ptr<Unknown> ptr{ my_make_unique<Unknown>(1, std::string{"ABC"}, 3) };
+
+    }
+}
+
+
+
+
+namespace VariadicTemplatesIntro_Seminar_Die_Erste {
+
+    template <typename T>
+    void printer(T n) {
+
+        std::cout << n << std::endl;
+    }
+
+    template <typename T, typename ... TRest> // einpacken (U => int, int, int)
+    void printer(T n, TRest ... m) {          // einpacken (m => 2, 3, 4)
+
+        // [[ maybe_unused ]] int temp;
+
+        std::cout << n << std::endl;
+
+        printer<TRest ...>(m ...);            // auspacken
+    }
+
+    void test_seminar() {
+
+        printer<int, int, int, int> (1, 2, 3, 4);             // int, int, int
+    }
+}
+
+/*
+    printer (int, int, int, int);
+    printer (int, int, int);
+    printer (int, int);
+
+    printer (int);
+
+*/
+
+
+
+
+
+
 namespace VariadicTemplatesIntro_01 {
 
     // ====================================================================
@@ -303,25 +416,28 @@ namespace VariadicTemplatesIntro_05 {
     }
 }
 
-void main_variadic_templates_intro()
+void main_variadic_templates_intro() 
 {
-    using namespace VariadicTemplatesIntro_01;
-    test_printer();
 
-    using namespace VariadicTemplatesIntro_02;
-    test_adder_01();
-    test_adder_02();
+    VariadicTemplatesIntro_Seminar::test_seminar();
 
-    using namespace VariadicTemplatesIntro_03;
-    test_my_make_unique();
-    test_my_make_unique_ex();
+    //using namespace VariadicTemplatesIntro_01;
+    //test_printer();
 
-    using namespace VariadicTemplatesIntro_04;
-    test_make_an_object();
-    test_make_an_object_ex();
+    //using namespace VariadicTemplatesIntro_02;
+    //test_adder_01();
+    //test_adder_02();
 
-    using namespace VariadicTemplatesIntro_05;
-    test_printer_01();
+    //using namespace VariadicTemplatesIntro_03;
+    //test_my_make_unique();
+    //test_my_make_unique_ex();
+
+    //using namespace VariadicTemplatesIntro_04;
+    //test_make_an_object();
+    //test_make_an_object_ex();
+
+    //using namespace VariadicTemplatesIntro_05;
+    //test_printer_01();
 }
 
 // =====================================================================================

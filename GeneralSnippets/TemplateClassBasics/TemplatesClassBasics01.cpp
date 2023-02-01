@@ -3,10 +3,145 @@
 // =====================================================================================
 
 #include <iostream>
+#include <vector>
 #include <string>
 #include <complex>
+#include <map>
+#include <type_traits>
 
 namespace ClassTemplatesBasics {
+
+    namespace ClassTemplatesBasics_Seminar {
+
+        class Calculator_MitFrage {
+        public:
+            static int add(int n, int m) { return n + m; }
+            static int sub(int n, int m) { return n - m; }
+            static int mul(int n, int m) { return n * m; }
+            static int div(int n, int m) { return n / m; }
+
+            int foo() { return 0; }
+            virtual int bar() { return 0; }
+        };
+
+
+        void test_seminar_01() {
+
+            Calculator_MitFrage calc;
+            calc.foo();
+
+            Calculator_MitFrage::add(1, 2);
+
+            // ABER !!!!!!!!!!!!!!
+
+            Calculator_MitFrage* calc2 = new Calculator_MitFrage();
+            calc2->bar();
+        }
+
+        // OO
+        //class Calculator {
+        //public:
+        //    static int add(int n, int m) { return n + m; }
+        //    static int sub(int n, int m) { return n - m; }
+        //    static int mul(int n, int m) { return n * m; }
+        //    static int div(int n, int m) { return n / m; }
+        //};
+
+        // GP
+        // Klassenvorlagen / Klassenschablone
+        // Primäres Template
+        template <typename T>
+        class Calculator {
+        public:
+            static T add(T n, T m) { 
+                return n + m;
+            }
+            static T sub(T n, T m) { return n - m; }
+            static T mul(T n, T m) { return n * m; }
+            static T div(T n, T m) { return n / m; }
+        };
+
+        // Partielle Spezialisierung
+        template <>
+        class Calculator <int> {
+        public:
+            static int add(int n, int m) {
+                return n + m;
+            }
+            static int sub(int n, int m) { return n - m; }
+            static int mul(int n, int m) { return n * m; }
+
+            static int div(int n, int m) {
+                return  (int) ( ( (double) n / m ) + 0.5 ) ;
+            }
+        };
+
+        class DoubleCalculator {
+        public:
+            static double add(double n, double m) { return n + m; }
+            static double sub(double n, double m) { return n - m; }
+            static double mul(double n, double m) { return n * m; }
+            static double div(double n, double m) { return n / m; }
+        };
+
+        void test_seminar_calc() {
+
+            Calculator<int> calc;
+
+            int result = Calculator<int>::add(1, 2);
+
+            double result2 = Calculator<double>::div(1.7, 2.7);
+
+            result = Calculator<int>::div(3, 4);
+        }
+
+        // 2. Beispiel zu Partielle Template Spezialisierung
+
+        // Primäres Template
+        template <typename T>   // T = int&
+        struct MyReferenceRemove
+        {
+            using type = T;
+        };
+
+        // Partielles Template
+        template <typename T>   // T& = int&   ==> T = int
+        struct MyReferenceRemove <T&>
+        {
+            using type = T;
+        };
+
+        void test_seminar() {
+
+            // Beispiel:
+            std::vector<int> zahlen;
+            std::vector<int>::iterator position;
+
+            std::map<int, int> zahlen2;
+            std::map<int, int>::iterator position2;
+
+            using T1 = MyReferenceRemove<int>::type;
+            using T2 = MyReferenceRemove<int&>::type;
+
+            T1 a;
+            T2 b;
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     namespace SimpleTemplateCalculator {
 
@@ -77,9 +212,11 @@ namespace ClassTemplatesBasics {
 }
 
 void main_class_templates_basics_01()
-{
-    using namespace ClassTemplatesBasics::SimpleTemplateCalculator;
-    test_01();
+{ 
+    ClassTemplatesBasics::ClassTemplatesBasics_Seminar::test_seminar();
+
+    //using namespace ClassTemplatesBasics::SimpleTemplateCalculator;
+    //test_01();
 }
 
 // =====================================================================================
