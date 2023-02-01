@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <unordered_map>
 #include <algorithm>
 #include <iterator>
 
@@ -14,27 +15,36 @@ namespace AlgorithmTransform {
     void test_01()
     {
         // very simple phone book
+        // dictionary // hash map // key: Name ==> size_t: Tel.-Nummer
         std::cout << "List of Entries: " << std::endl;
 
-        std::map<std::string, size_t> phonebook
+        // Es wird bei der std::map sortiert !
+        // Bei std::unordered_map: kein Sortieren.
+        std::unordered_map<std::string, size_t> phonebook
         {
-            { "Hans Meier" , 12345678 },
-            { "Hubert Mueller", 87654321 },
-            { "Franz Schneider", 81726354 }
+            { "Franz Schneider", 81726354 },
+            { "Sepp Meier" , 12345678 },
+            { "Hubert Mueller", 87654321 }
         };
 
+        // Range-Based for Loop // Structured Binding
         for (const auto& [name, number] : phonebook) {
             std::cout << name << ": " << number << std::endl;
         }
 
-        std::vector<std::string> names(phonebook.size());  // set size of vector (!)
+        std::vector<std::string> names (2 * phonebook.size());  // set size of vector (!)
+
+        // std::vector<std::string> names; 
 
         // std::transform on a single range - retrieve names from phonebook
         std::transform(
             std::begin(phonebook),
             std::end(phonebook),
-            std::begin(names),    // beginning of the destination range
-            [](const std::pair<std::string, size_t>& entry) {
+
+            std::begin(names),         // beginning of the destination range
+            // std::back_inserter(names),    // Adapter für push_back
+            
+            [] (const std::pair<std::string, size_t>& entry) {
                 return std::get<0>(entry);
             }
         );
@@ -114,8 +124,8 @@ void main_transform()
 {
     using namespace AlgorithmTransform;
     test_01();
-    test_02();
-    test_03();
+    //test_02();
+    //test_03();
 }
 
 // =====================================================================================

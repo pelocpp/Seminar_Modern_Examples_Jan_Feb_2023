@@ -14,7 +14,7 @@ namespace VariantDemo {
 
     void test_01() {
 
-        std::variant<int, float, std::string> var{ 10.5F };
+        std::variant<int, float, std::string> var { 10.5F };
 
         std::cout
             << var.index()
@@ -202,13 +202,29 @@ namespace VariantDemo {
 
     void test_06() {
 
+        // STL-Container: homogen   ==> 'T'
+
+        // STL-Container: homogen vom Typ 'std::variant'
+        //                heterogen in Bezug auf alles, was in dem 
+        //                std::variant abgelegt werden darf.            
+
         std::vector<std::variant<int, long, long long, float, double>>
-            vec = { 100, 200l, 300ll, 400.5f, 500.5 };
+            
+            vec = { 100l, 200, 300ll, 400.5, 500.5F };
+
 
         // display each value
         std::cout << "Values:      ";
+        // vec: std::vector<std::variant<...>>
+        // Parameter var: vom Typ std::variant<...>
+
         for (const auto& var : vec) {
-            std::visit([](const auto& n) { std::cout << n << " "; }, var);
+            std::visit(
+                [](const auto& n) { 
+                    std::cout << n << " "; 
+                },
+                var
+            );
         }
         std::cout << std::endl;
 
@@ -287,15 +303,15 @@ namespace VariantDemo {
     }
 }
 
-void main_variant()
+void main_variant() 
 {
     using namespace VariantDemo;
     //test_01();
     //test_02();
-    test_03();
+    //test_03();
     //test_04();
     //test_05();
-    //test_06();
+    test_06();
     //test_07();
     //test_08();
 }

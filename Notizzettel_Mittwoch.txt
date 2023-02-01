@@ -40,23 +40,6 @@ Folding - C++ 17
 
 
 
-Übungen:
-
-Variadischen Templates:
-
-  Aufgabe 1
-  Aufgabe 2
-  Aufgabe 7
-
-Utility Klassen:
-  Aufgabe 2
-
-STL-Algorithmen:
-  Aufgabe 2  (Structured Binding)
-
-
-
-
 =================================================
 
 Grundlagen zu Templates:
@@ -229,5 +212,41 @@ Beobachtung: Brauche machmal eine zweite Variable (in der Regel des Typs bool),
 um eine Aussage treffen zu können, ob in der ersten
 variablen ein gültiger Wert ist oder nicht.
 
-Bis 15 Uhr.
+// ====================================================
+
+Algorithmen:
+
+Achtung:
+
+Bei den so gen. "kopierenden" Algorithmen:  Ergebnis wird durch einen Kopier-Vorgang erstellt.
+
+Aussage: In den Ziel-Container wird mit dem operator[] geschrieben
+         "an die Stelle 'index' geschrieben "
+
+Abhilfe:
+
+i) Ziel-Container hat eine entsprechende Größe.
+
+ii) In den Ziel-Container  wird mit push_back geschrieben:
+     
+    Wie ??? Mit einem Adapter:   std::back_inserter 
+
+
+=================================================
+
+Übungen für Mittwoch:
+
+Variadischen Templates:
+
+  Aufgabe 1
+  Aufgabe 2
+  Aufgabe 7
+
+Utility Klassen:
+  Aufgabe 2
+
+STL-Algorithmen:
+  Aufgabe 2  (Structured Binding)
+
+=================================================
 
