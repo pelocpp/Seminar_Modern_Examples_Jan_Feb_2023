@@ -29,10 +29,20 @@ namespace StructuredBinding {
     }
 
     void test_03() {
-        int arr[] = { 10, 11, 12 };
-        auto [ a, b, c ] = arr;
-        std::cout << a << ", " << b << ", " << c << std::endl;
+
+        int  arr[3] = { 10, 11, 12 };
+
+        const auto& [ a, b, c ] = arr;
+
+        // a = 123;
+        
+        std::cout << arr[0] << ", " << b << ", " << c << std::endl;
     }
+
+
+
+
+
 
     void test_03_a() {
         int arr[] = { 10, 11, 12 };
@@ -52,12 +62,12 @@ namespace StructuredBinding {
     void test_04() {
 
         // without structured binding
-        Point p1 = { 1, 2 };
+        Point p1 { 1, 2 };
         std::cout << "X Coordinate : " << p1.m_x << std::endl;
         std::cout << "Y Coordinate : " << p1.m_y << std::endl;
 
         // with structured binding
-        Point p2 = { 10, 20 };
+        Point p2 { 10, 20 };
         auto [x, y] = p2;
         std::cout << "X Coordinate : " << x << std::endl;
         std::cout << "Y Coordinate : " << y << std::endl;
@@ -109,13 +119,13 @@ namespace StructuredBinding {
 void main_structured_binding()
 {
     using namespace StructuredBinding;
-    test_01();
-    test_02();
+    //test_01();
+    //test_02();
     test_03();
-    test_03_a();
-    test_04();
-    test_04_a();
-    test_05();
+    //test_03_a();
+    //test_04();
+    //test_04_a();
+    //test_05();
 }
 
 // =====================================================================================

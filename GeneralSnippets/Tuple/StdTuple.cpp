@@ -24,10 +24,13 @@ namespace TupleSamples {
         std::tuple <char, int, double> moreValues{ 'Z', 987, 987.654 };
 
         // accessing tuple values using std::get 
+
+        const int n{ 1 };
+
         std::cout << "The values of tuple are : ";
         std::cout 
             << std::get<0>(values) << " - " 
-            << std::get<1>(values) << " - " 
+            << std::get<n>(values) << " - " 
             << std::get<2>(values)
             << std::endl;
 
@@ -63,11 +66,13 @@ namespace TupleSamples {
 
     void test_02()
     {
+        // using Row = std::tuple<int, char, double, std::string>;
+
         Row row1 = std::make_tuple(10, 'A', 1.11, "Mueller");
         Row row2 = std::make_tuple(11, 'B', 2.22, "Sepp");
         Row row3 = std::make_tuple(12, 'C', 3.33, "Hans");
 
-        std::vector<Row> mySheet;
+        std::vector<std::tuple<int, char, double, std::string>> mySheet;
 
         mySheet.push_back(row1);
         mySheet.push_back(row2);
@@ -94,6 +99,8 @@ namespace TupleSamples {
         mySheet.push_back(row3);
 
         // C++ 17: structured binding
+        auto& value = mySheet[0];
+
         const auto& [id, abbr, val, name] = mySheet[0];
 
         std::cout
@@ -101,6 +108,9 @@ namespace TupleSamples {
             << "Abbr:  " << abbr << std::endl
             << "Value: " << val << std::endl
             << "Name:  " << name << std::endl;
+
+        // using Row = std::tuple<int, char, double, std::string>;
+        // Range - Based Loop / Keine Kopien / Zugriff mit Referenz / Structured Binding
 
         for (const auto& [id, abbr, val, name] : mySheet) {
 
@@ -124,7 +134,7 @@ namespace TupleSamples {
         mySheet.push_back(row2);
         mySheet.push_back(row3);
 
-        // C++ 14: std::tie
+        // C++ 11: std::tie
         int id{};
         char abbr{};
         double val{};
@@ -138,7 +148,7 @@ namespace TupleSamples {
             << "Value: " << val << std::endl
             << "Name:  " << name << std::endl;
 
-        for (const auto& row : mySheet) {
+        for (const std::tuple<int, char, double, std::string>& row : mySheet) {
 
             std::tie(id, abbr, val, name) = row;
 
