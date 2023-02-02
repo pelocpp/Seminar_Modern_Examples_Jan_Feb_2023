@@ -110,7 +110,7 @@ int main()
         //main_accumulate();
         //main_allocator_classtype();
         //main_allocator_integral();
-        //main_any();
+        main_any();
         //main_apply_integer_sequence();
         //main_argument_dependent_name_lookup();
         //main_array();
@@ -169,7 +169,7 @@ int main()
         //main_sso();
         //main_standard_library_STL();
         //main_static_assert();
-        main_string_view();
+        //main_string_view();
         //main_structured_binding();
         //main_class_templates_basics_01();
         //main_class_templates_basics_02();
