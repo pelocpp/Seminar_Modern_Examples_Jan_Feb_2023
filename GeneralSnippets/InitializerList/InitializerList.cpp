@@ -12,6 +12,7 @@
 namespace InitializerList {
 
     // function using std::initializer_list
+
     int myIntAdderFunction(std::initializer_list<int> list)
     {
         int result{};

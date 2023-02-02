@@ -196,7 +196,7 @@ int main()
         //main_variadic_else_if();
         //main_variadic_templates_examples();
         //main_variadic_templates_more_examples();
-        main_variant();
+        //main_variant();
         //main_virtual_destructor();
         //main_virtual_override_final();
         //main_weak_pointer();

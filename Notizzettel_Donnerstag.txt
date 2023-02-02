@@ -1,0 +1,54 @@
+// =====================================================================
+// Notizzettel.txt
+// =====================================================================
+
+Modernes C++ / Online Seminar New Elements Nürnberg
+
+Peter Loos // "Du"
+
+peter.loos@gmx.de
+
+// =====================================================================
+
+Donnerstag:
+-----------
+
+Literatur
+
+Besprechung der Übungen:
+
+Variadische Templates:
+
+  Aufgabe 1
+  Aufgabe 2
+  Aufgabe 7
+
+Utility Klassen:
+  Aufgabe 2
+
+STL-Algorithmen:
+  Aufgabe 2  (Structured Binding)
+
+------------------------------------------
+
+Folding - C++ 17
+
+Vererbung: Schlüsselwörter override, virtual, final
+
+Ergänzungen zu Zeichenketten
+
+Neue Utility Klassen:  std::any, std::array
+
+Metaprogramming
+
+SFINAE (“Substitution failure is not an error“)
+
+Multithreading
+
+RAII
+
+Ausblick: C++ 20
+
+
+=================================================
+

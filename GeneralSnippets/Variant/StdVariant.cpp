@@ -10,6 +10,8 @@
 #include <functional>
 #include <type_traits>
 
+#include  <initializer_list>
+
 namespace VariantDemo {
 
     void test_01() {
@@ -253,6 +255,54 @@ namespace VariantDemo {
         std::cout << std::endl;
     }
 
+    void test_06_frage() {
+
+        // STL-Container: homogen   ==> 'T'
+
+        // STL-Container: homogen vom Typ 'std::variant'
+        //                heterogen in Bezug auf alles, was in dem 
+        //                std::variant abgelegt werden darf.            
+
+        std::initializer_list<std::variant<int, long, long long, float, double>>
+
+            vec = { 100l, 200, 300ll, 400.5, 500.5F };
+
+
+        // display each value
+        std::cout << "Values:      ";
+        // vec: std::vector<std::variant<...>>
+        // Parameter var: vom Typ std::variant<...>
+
+        for (const auto& var : vec) {
+            std::visit(
+                [](const auto& n) {
+                    std::cout << n << " ";
+                },
+                var
+                    );
+        }
+        std::cout << std::endl;
+
+        // display each type
+        std::cout << "Types:       ";
+        for (const auto& var : vec) {
+            std::visit([](const auto& arg) { std::cout << typeid(arg).name() << " "; }, var);
+        }
+        std::cout << std::endl;
+
+        // get the sum
+        std::common_type<int, long, long long, float, double>::type res{};
+        std::cout << "Type of Sum: " << typeid(res).name() << std::endl;
+
+        for (const auto& var : vec) {
+            std::visit([&res](const auto& arg) { res += arg; }, var);
+        }
+        std::cout << "Sum:         " << res << std::endl;
+
+        std::cout << std::endl;
+    }
+
+
     // -------------------------------------------------------------------
 
     template<class... Ts>
@@ -311,7 +361,8 @@ void main_variant()
     //test_03();
     //test_04();
     //test_05();
-    test_06();
+    //test_06();
+    test_06_frage();
     //test_07();
     //test_08();
 }
