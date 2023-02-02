@@ -10,6 +10,10 @@ peter.loos@gmx.de
 
 // =====================================================================
 
+Motivation ...
+
+// =====================================================================
+
 Donnerstag:
 -----------
 
@@ -226,5 +230,165 @@ Link:
 
 https://github.com/pelocpp/cpp_design_patterns/blob/master/Patterns/RAII_Idiom/Resources/Readme.md
 
+=====================================================================
 
-13:05 geht es weiter :)
+Multithreading:
+
+Unterlagen hierzu:
+
+https://github.com/pelocpp/cpp_parallel_programming
+
+
+Beobachtung:
+
+Threads ....... kann ich (fast) in jedem Betriebssystem anlegen, starten, verwalten .....
+
+C++ und std::thread
+
+C++ ====> ist auf vielen Betriebssystemen ablauffähig
+
+      ==> kleinste gemeinsame Nenner: std::thread,  std::async, ....
+
+----------------------------------
+
+Aussage:
+
+Objekte von std::thread MÜSSEN auf 2 Weisen aufgeräumt werden: 
+
+i)  join:      Gibt die Resources frei ...und wartet zuvor auf das Ende des Threads.
+
+ii) detach: Markiert das Thread-Objekt auf eine Weise, dass die Resources  nach Beendigung des Threads
+                 freigegeben werden können.
+
+
+Windows OS:
+
+Wenn der primäre Thread (main) sich beendet, werden alle anderen Threads (sekundäre Threads)
+    automatisch beendet.
+
+ ==================================================
+
+Ein globales Objekt (std::cout)
+
+3 Threads, die auf dieses  globale Objekt zugreifen:   Threads greifen KONKURRIEREND auf EIN Objekt zu.
+
+Option: Schutz über ein Mutex-Objekt herstellen
+
+VORSICHT: Dieses Mutex-Objekt muss für alle Threads DASSELBE Objekt sein !!!!!!!!!!!
+
+ ==================================================
+
+Mutex-Objekt: we can do better: Mit RAII
+
+std::scoped_lock:   Ist die Hüllen Klasse
+
+ ==================================================
+
+Kooperation:
+
+Threads können auch KOOPERIEREN :)
+
+Mit dem Monitor-Konzept von Dijkstra.  std::condition_variable
+
+ ==================================================
+
+Aussage:   
+
+Lapidar: Die Klasse std::thread ist etwas "in die Jahre" gekommen.
+
+Konzept:  Die Methode hat void als Rückgabe.
+
+Wunsch: Ein Thread liefert ein Ergebnis zurück.   std::thread : No.
+
+std::async: Yes.   
+
+Zukunft: std::future.
+
+2 Möglichkeit: 
+
+Doch mit std::thread (Rückgabe eines Wertes): Mit Zukunft und Versprechen.
+
+ ==================================================
+
+Option: std::async kann einen Thread-Pool verwenden.
+
+Threads eines Thread-Pools sind performanter !!!!
+
+ ==================================================
+
+Frage: Rückgabe von Daten über Pointer:
+
+a) Ginge.
+
+b) Was ist, wenn der Thread die Berechnung nicht durchführen konnte ???
+
+    Diese Information muss - nach Join - auch verfügbar sein.
+
+c) Join blockiert ... will ich das in DERSELBEN Methode aufrufen ??? 
+
+    Nein: Denn dann ist der Thread umsonst.
+
+d) Frage: Ist ein Objekt std::thread kopierbar ?? Nein, aber moveable.
+
+     Ich muss das  std::thread - Objekt irgendwo hin-moven,  um an ihm Join aufrufen zu können.
+
+e) get blockiert ... aber Blockaden sind generell unangenehm ...
+
+
+ ==================================================
+
+C++ 20:
+
+Ausblick .............. ist hier:
+
+https://github.com/pelocpp/cpp_20
+
+
+Windows:
+
+Nachrichtenwarteschleife:
+
+while (GetMessage (&msg, ...)) {    // wenn keine Nachricht da ist: Dann blockiert GetMessage
+
+    Dispatch(msg);
+}
+
+ ==================================================
+
+std::async in C++:
+
+a) std::async erzeugt ein Thread !!!
+
+b) Mit std::future.get() wird das Ergebnis abgeholt (blockierend oder nicht-blockierend).
+
+Danach ist der Thread tot.
+
+------------------------
+
+Bemerkung:
+
+What are async in Python?
+
+Asynchronous routines are able to “pause” while waiting on their ultimate result
+and let other routines run in the meantime.
+
+DAS HAT MIT C++ std::async nichts ZU TUN !!!
+
+REST-API:   await = call_rest_api ( ...);
+==>
+
+
+a) OS Funktion 'CreateThread' function in Win32 == 'std::thread' in C++
+
+b) std::async  in C++ == OS Funktion 'CreateThread'   ODER  'QueueUserWorkItem' (und andere)
+
+In Beiden:   Thread-Prozedur:  return;  Dann ist der Thread ZU ENDE.
+
+
+
+
+
+
+
+
+
