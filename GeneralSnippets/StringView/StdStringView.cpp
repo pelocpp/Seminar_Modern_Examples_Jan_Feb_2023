@@ -11,8 +11,11 @@ namespace StringViewDemonstration {
     void test_01()
     {
         std::string_view sv("The quick brown fox jumps over the lazy dog");  // Konstante Zeichenketten
+        // sv[0] = 't';
 
-        std::string s("The quick brown fox jumps over the lazy dog");  //  Heap
+
+        std::string s("The quick brown fox jumps over the lazy dog");  //  Heap / new
+        s[0] = 't';
 
         // sv[0] = '?';   // error
         char ch = sv[0];
@@ -27,6 +30,7 @@ namespace StringViewDemonstration {
         std::cout << sv << std::endl;
 
         s += "Sixty zippers were quickly picked from the woven jute bag";  // the content of s is reallocated !
+        std::cout << s << std::endl;
 
         std::cout << sv << std::endl;
     }
@@ -76,10 +80,10 @@ namespace StringViewDemonstration {
 void main_string_view()
 {
     using namespace StringViewDemonstration;
-    test_01();
+    //test_01();
     test_02();
-    test_03();
-    test_04();
+    //test_03();
+    //test_04();
 }
 
 // =====================================================================================

@@ -39,7 +39,7 @@ namespace VirtualOverrideFinal{
     class KeyboardDriver : public Driver
     {
     public:
-        void send(int) final {};  // cannot be overriden anymore
+        void send(int) override final {};  // cannot be overriden anymore
     };
 
     class MouseDriver final : public Driver // cannot be used as base class anymore
@@ -54,7 +54,7 @@ namespace VirtualOverrideFinal{
     //class SpecialKeyboardDriver : public KeyboardDriver
     //{
     //public:
-    //    void send(int) final;  // cannot be overriden anymore
+    //    void send(int);  // cannot be overriden anymore
     //};
 
     // =========================================================

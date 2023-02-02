@@ -108,6 +108,8 @@ namespace Exercises_UtilityClasses {
             // getter / setter
             std::string getTitle() const { return m_title; }
             std::string getDirector() const { return m_director; }
+
+            // Konzept / Festlegung --- Python:  Duck Typing
             double getPrice() const { return m_price; }
             size_t getCount() const { return m_count; }
         };
@@ -116,15 +118,16 @@ namespace Exercises_UtilityClasses {
         class Bookstore
         {
         private:
-            using Stock = std::vector<std::variant<TMedia ...>>;
+            // using Stock2 = std::vector<std::variant<Book, Movie>>;
+            using Stock = std::vector<std::variant<TMedia ...>>; // auspacken == komma getrennte Liste
             using StockList = std::initializer_list<std::variant<TMedia ...>>;
 
         public:
-            explicit Bookstore(StockList stock) : m_stock{ stock } {}
+            explicit Bookstore(StockList list) : m_stock{ list } {}
 
             // template member method
-            template <typename TNewMedia>
-            void addMedia(TNewMedia media) {
+            template <typename T>
+            void addMedia(T media) {
                 m_stock.push_back(media);
             }
 
@@ -132,17 +135,17 @@ namespace Exercises_UtilityClasses {
 
                 double total{};
 
-                for (const auto& element : m_stock) {
+                for (const auto& element : m_stock) {  // element == std::variant
 
                     double price{};
                     size_t count{};
 
                     std::visit(
-                        [&](const auto& element) {
-                            price = element.getPrice();
-                            count = element.getCount();
+                        [&](const auto& e) {        // e == konkretes Objekt, das im std::variant enthalten ist
+                            price = e.getPrice();   // Duck Typing
+                            count = e.getCount();
                         },
-                        element
+                        element  // element == std::variant
                     );
 
                     total += price * count;

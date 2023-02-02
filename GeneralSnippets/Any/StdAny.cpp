@@ -14,6 +14,9 @@ namespace AnySamples {
     void test_01_any() 
     {
         std::any a{ 1 };
+
+        auto wert = std::any_cast<int>(a);
+
         std::cout << a.type().name() << ": " << std::any_cast<int>(a) << std::endl;
 
         a = 3.14;

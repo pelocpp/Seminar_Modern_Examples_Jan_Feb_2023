@@ -57,7 +57,7 @@ namespace VariadicTemplatesIntro_Seminar {
     std::unique_ptr<T> my_make_unique(TARGS&& ... args)
     {
         // Ohne Move-Semantik --- also reine Kopien
-         std::unique_ptr<T> tmp1{ new T{ args ...} };
+         std::unique_ptr<T> tmp1{ new T{ args ... } }; // auspacken: komma-getrennte Liste (p1, p2, p3)
 
         // Mit Move-Semantik --- perfektes Weiterleiten
         std::unique_ptr<T> tmp{ new T{ std::forward<TARGS>(args) ...} };

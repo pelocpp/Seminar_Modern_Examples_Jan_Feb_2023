@@ -12,6 +12,61 @@ namespace VariadicTemplatesFolding {
     /* folding examples: introduction
     */
 
+    template <typename ... TArgs>
+    auto addierer(TArgs ... args) {
+
+        // (((1 + 2) + 3) + 4) + 5
+
+        auto result = ( ... + args );
+
+        return result;
+    }
+
+    template <typename ... TArgs>
+    auto subtrahierer (TArgs ... args) {
+
+        // (((1 + 2) + 3) + 4) + 5
+
+        auto result = ( args - ... );
+
+        return result;
+    }
+
+    template <typename T, typename ... TArgs>
+    void my_printer (T first, TArgs ... args) {
+
+        // (((std::cout << pack1) << pack2) << ...) << packN;
+        // (std::cout << ... << args);
+
+
+        // Komma - Operator unär : (... op pack)
+
+        std::cout << first;
+
+        ( ... , ( std::cout << ", " << args ));
+
+        std::cout << std::endl;
+    }
+
+  
+
+    void test_seminar() {
+
+        // Klammerung kann eine Bedeutung haben :)
+        // (1 - 2) - 3 = -4
+        // 1 - (2 - 3) = +2
+
+        my_printer( 1, 2 , 3, 4, 5 );
+
+    }
+
+
+
+
+
+
+
+
     template<typename... TArgs>
     auto anotherAdder(TArgs... args) {
         return (args + ... + 0);  // binary right fold (init == 0)
@@ -134,14 +189,15 @@ namespace VariadicTemplatesFolding {
 void main_variadic_templates_folding()
 {
     using namespace VariadicTemplatesFolding;
-    test_01();
-    test_02();
-    test_03a();
-    test_03b();
-    test_03c();
-    test_03d();
-    test_04();
-    test_05();
+    test_seminar();
+    //test_01();
+    //test_02();
+    //test_03a();
+    //test_03b();
+    //test_03c();
+    //test_03d();
+    //test_04();
+    //test_05();
 }
 
 // =====================================================================================

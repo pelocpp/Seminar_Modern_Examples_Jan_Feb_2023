@@ -23,6 +23,11 @@ namespace Exercises_VariadicTemplates {
 
         template<typename T, typename... TRest>
         bool andAll(T cond, TRest ... conds) {
+
+            //bool tmp = andAll(conds...);
+            //bool result = tmp && cond;
+            //return result;
+
             return cond && andAll(conds...);
         }
 
@@ -88,6 +93,8 @@ namespace Exercises_VariadicTemplates {
         }
     }
 
+    // -----------------------------------------------------------------
+
     namespace Exercise_02 {
 
         template<typename T1, typename T2>
@@ -96,15 +103,15 @@ namespace Exercises_VariadicTemplates {
             std::cout << " # " << arg1 << ": " << typeid(arg1).name();
             std::cout << " - " << arg2 << ": " << typeid(arg2).name() << std::endl;
 
-            return std::is_same<decltype(arg1), decltype(arg2)>::value;
+            // return std::is_same<decltype(arg1), decltype(arg2)>::value;
             // or
             // return std::is_same_v<decltype(arg1), decltype(arg2)>;
             // or
-            // return std::is_same<T1, T2>::value;
+            return std::is_same<T1, T2>::value;
         }
 
         template<typename T1, typename T2, typename... TRest>
-        bool sameType(T1 arg1, T2 arg2, TRest... args)
+        bool sameType(T1 arg1, T2 arg2, TRest ... args)
         {
             std::cout << " > " << arg1 << ": " << typeid(arg1).name();
             std::cout << " - " << arg2 << ": " << typeid(arg2).name() << std::endl;
@@ -121,17 +128,17 @@ namespace Exercises_VariadicTemplates {
         void testExercise_02() {
 
             bool result;
-            result = sameType(43, false, "hello");
+            //result = sameType(43, false, "hello");
+            //std::cout << std::boolalpha << result << std::endl;
+
+            result = sameType(1.0, 2, 3, 4, 5, 6, 7, 8, 9);
             std::cout << std::boolalpha << result << std::endl;
 
-            result = sameType(1, 2, 3, 4, 5, 6, 7, 8, 9);
-            std::cout << std::boolalpha << result << std::endl;
+            //result = sameType(1, 2, 3, 4, '?', 5, 6, 7, 8, 9);
+            //std::cout << std::boolalpha << result << std::endl;
 
-            result = sameType(1, 2, 3, 4, '?', 5, 6, 7, 8, 9);
-            std::cout << std::boolalpha << result << std::endl;
-
-            result = sameType("123", std::string("456"), "789", "111", "999");
-            std::cout << std::boolalpha << result << std::endl;
+            //result = sameType("123", std::string("456"), "789", "111", "999");
+            //std::cout << std::boolalpha << result << std::endl;
         }
     }
 
@@ -363,13 +370,23 @@ namespace Exercises_VariadicTemplates {
 
     namespace Exercise_07 {
 
-        template<typename... TArgs>
-        size_t totalLength(const TArgs& ... args)
+        template<typename... TArgs>  // Typen einpacken
+        
+        // auspacken: komma-getrennte Liste (args1, args2, args3)
+
+        size_t totalLength(const TArgs& ... args)  // Werte einpacken
         {
             size_t len{};
-            for (const auto& s : { args ... }) {
+
+            for (const auto& s : std::initializer_list<std::string>{ args ... } ) {   // auspacken
                 len += s.size();
             }
+
+            // oder
+            //for (const auto& s : { args ... }) {   // auspacken
+            //    len += s.size();
+            //}
+
             return len;
         }
 
@@ -403,12 +420,12 @@ namespace Exercises_VariadicTemplates {
 void test_exercises_variadic_templates()
 {
     using namespace Exercises_VariadicTemplates;
-    Exercise_01::testExercise_01();
-    Exercise_02::testExercise_02();
-    Exercise_03::testExercise_03();
-    Exercise_04::testExercise_04();
-    Exercise_05::testExercise_05();
-    Exercise_06::testExercise_06();
+    //Exercise_01::testExercise_01();
+    //Exercise_02::testExercise_02();
+    //Exercise_03::testExercise_03();
+    //Exercise_04::testExercise_04();
+    //Exercise_05::testExercise_05();
+    //Exercise_06::testExercise_06();
     Exercise_07::testExercise_07();
 }
 

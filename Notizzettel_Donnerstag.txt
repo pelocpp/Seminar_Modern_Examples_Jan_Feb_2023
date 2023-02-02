@@ -52,3 +52,179 @@ Ausblick: C++ 20
 
 =================================================
 
+"Short-Circuit-Evaluation"
+
+int a = 1;
+int b = 5;
+int c = 7;
+
+a > b: false
+
+if (a > b && b < c) {
+   ...
+}
+
+....
+jme ende;
+
+Kann DRAMATISCHE NEBENEFFEKTE / FEHLERSITUATIONEN haben:
+
+if (a > b && b < c) {
+
+   ++c;
+   ...
+}
+
+// ==================================================
+
+Anmerkung:
+
+Wie kann man alle Daten eines Parameter Packs (variadische Templates) "anfassen"?
+
+Man packe sie in einer std::initializer_list aus!
+
+https://github.com/pelocpp/cpp_modern_examples/blob/master/GeneralSnippets/VariadicTemplates/VariadicTemplates_02_WorkingOnEveryArgument.md
+
+
+// ==================================================
+
+C / C++:
+
+Sequenz-Operator  // Komma - Operator:
+
+int a = 1;
+int b = 1;
+int c = 1;
+
+//  gewohnte Schreibweise:
+
+a = 10; b = 11; c = 12;
+
+Komma - Operator:
+
+a = 10, b = 11, c = 12;
+
+C:
+
+for (int i = 0, j = 1; ......)
+
+// ==================================================
+
+Folding - C++ 17:
+
+a) Gibt es auch in Python:
+
+https://burgaud.com/foldl-foldr-python/
+
+b) std::accumulate
+
+Das ist gewissermaßen ein Folding als STL- Algorithmus :)
+
+https://github.com/pelocpp/cpp_modern_examples/blob/master/GeneralSnippets/Accumulate/StdAccumulate.md
+
+// ==================================================
+
+Vererbung: Schlüsselwörter override, virtual, final
+
+https://github.com/pelocpp/cpp_modern_examples/blob/master/GeneralSnippets/VirtualOverrideFinal/VirtualOverrideFinal.md
+
+
+'override' verbessert die Lesbarkeit / Qualität des Quellcodes.
+
+'final' verhindert weiteres Überschreiben.
+
+// ==================================================
+
+std::string:   Daten via new am Heap
+
+
+std::string_view:  (C++ 17)
+
+               Daten über einen Zeiger verfügbar. Ziel: KEIN new
+               Wohin zeigt der Zeiger ???
+
+               Vorschlag: Für konstante Zeichenketten (Fremdsprachen-Fähigkeit),
+                          die zb im Datensegment liegen (früher: auch Code-Segment ist vorstellbar)
+
+// ==================================================
+
+SSO
+
+Small String Otimization
+
+std::string:   Daten via new am Heap: Es gibt AUSNAHMEN ... für "kurze" Zeichenketten.
+
+// ==================================================
+
+STL-Klasse std::array
+
+Welcher Unterschied ist zu einem C-Array vorhanden:
+
+std::array<int, 5> zahlen { 1, 2, 3, 4, 5};
+
+vs
+
+int zahlen[5] { 1, 2, 3, 4, 5};
+
+Prinzipiell: KEINER.
+
+Call-to-Action: Go for std::array
+
+
+Frage:
+
+zahlen[10] = 123; // was passiert ???
+
+std::array ist hier besser:
+
+a) 2 Schreibweisen des Zugriffs:
+
+zahlen.at(10) = 123;   // Nimmt am C++ - Exception Handling teil // ist mit Range Check !!!
+                       // ist langsamer :(
+
+zahlen[10] = 123;      // Nimmt nicht am C++ - Exception Handling teil // ist ohne Range Check !!!
+                       // ist langsamer :(
+
+===============================================
+
+RAII
+
+Verwaltung von Ressources:  Objekte, die das Betriebssystem verwaltet.
+
+Beispiele:
+
+Socket: open ... close
+
+File:  open ... close
+
+SqlConnection:  create ... release ...
+
+Mutex:   lock  ... unlock
+
+Es geht immer um den ZWEITEN Befehl: Der darf NICHT vergessen werden!
+
+Was ist die Idee / Strategie:
+
+A) Man gehe bzgl. der Resource zu einer Hüllenklasse / Hüllenobjekt über
+
+B) OO:  Konstruktor
+        Destruktor
+
+c) Determinismus: Destruktor wird AUTOMATISCH aufgerufen
+
+D) Hüllenobjekte sollten am Stack liegen
+
+E) Konstruktor: Hier wird "open", "lock", etc. aufgerufen 
+
+F) Destruktor: Hier Wird "close", "unlock"  etc.  aufgerufen
+
+(( RAII:  ähnlich, aber für Resources  (Socket-Verbindung, Sql-Connection, ) ))
+
+Folien:
+
+Link:
+
+https://github.com/pelocpp/cpp_design_patterns/blob/master/Patterns/RAII_Idiom/Resources/Readme.md
+
+
+13:05 geht es weiter :)
